@@ -1,7 +1,7 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_ccavenue'
+  s.name        = 'spree_better_ccavenue'
   s.version     = '2.3.1'
   s.summary     = 'CCAvenue payment gateway support for Spree'
   s.description = 'CCAvenue is payment gateway widely used in India. This gem provides suppport for CCAvenue in Spree'
@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.email             = 'lkananowicz@gmail.com'
   s.homepage          = 'http://www.spreecommerce.com'
 
-  #s.files       = `git ls-files`.split("\n")
-  #s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files       = `git ls-files`.split("\n")
+  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_path = 'lib'
   s.requirements << 'none'
 

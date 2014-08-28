@@ -109,17 +109,17 @@ def checksum(*args)
 end
 
 def ccavenue_params(auth_desc)
-  params = {}
-  params['AuthDesc'] = auth_desc
-  params['nb_order_no'] = 'CCAV123456'
-  params['Amount'] = @order.amount.to_s
-  params['Checksum'] = checksum(@payment_method.preferred_account_id, 
-                                @transaction.gateway_order_number, 
-                                params['Amount'], 
-                                params['AuthDesc'],
-                                @payment_method.preferred_working_key)
-  params['card_category'] = 'NETBANKING'
-  params[:use_route] = :spree
-  params[:id] = @transaction.id
-  params
+  #params = {}
+  #params['AuthDesc'] = auth_desc
+  #params['nb_order_no'] = 'CCAV123456'
+  #params['Amount'] = @order.amount.to_s
+  #params['Checksum'] = checksum(@payment_method.preferred_merchant_id,
+  #                              @transaction.gateway_order_number,
+  #                              params['Amount'],
+  #                              params['AuthDesc'],
+  #                              @payment_method.preferred_working_key)
+  #params['card_category'] = 'NETBANKING'
+  #params[:use_route] = :spree
+  #params[:id] = @transaction.id
+  #params
 end

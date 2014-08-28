@@ -1,9 +1,8 @@
 class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
-  preference :account_id,  :string
-  preference :url,         :string, :default =>  "https://www.ccavenue.com/shopzone/cc_details.jsp"
-  preference :working_key, :string
-  preference :mode,        :string
-  preference :batch_transaction_should_complete_order, :boolean, :default => true
+  preference :merchant_id,    :string
+  preference :access_code,    :string
+  preference :encryption_key, :string
+  preference :url,            :string, :default => 'https://test.ccavenue.com/transaction/transaction.do'
 
   def payment_profiles_supported?
     true # we want to show the confirm step.

@@ -50,14 +50,6 @@ class Spree::Ccavenue::Transaction < ActiveRecord::Base
     end
   end
 
-  def generate_checksum
-    Zlib.adler32([self.payment_method.preferred_account_id,
-                  gateway_order_number,
-                  ccavenue_amount,
-                  auth_desc,
-                  self.payment_method.preferred_working_key].join('|')).to_s
-  end
-
   def verify_checksum
     generate_checksum == self.checksum
   end
