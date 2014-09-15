@@ -1,8 +1,8 @@
 <fieldset id="billing">
-  <p>
-    After order confirmation you'll be redirected to CCAvenue Payment Gateway. After completing the
-    payment form you'll be back to the store.
-  </p>
+  <span>
+    After order confirmation you'll be redirected to CCAvenue Payment Gateway.
+  </span>
+  <br>
 
   <%= link_to(image_tag('http://www.ccavenue.com/images/460.gif'), gateway_ccavenue_path(order_id: @order.number, payment_method_id: payment_method.id), :method => :post, :id => 'ccavenue_button') %>
 
@@ -10,19 +10,19 @@
     $(function() {
       var spreePaymentRadio = $("#checkout_form_payment input:radio")
 
-      var hideCheckoutButtonForCCAvenue = function() {
+      var hideCouponCodeFieldForCCAvenue = function() {
         if ($("#checkout_form_payment input:radio:checked").val() == <%= payment_method.id %>) {
-          $("#checkout_form_payment .form-buttons").hide();
+          $("#checkout_form_payment p.field").hide();
         } else {
-          $("#checkout_form_payment .form-buttons").show();
+          $("#checkout_form_payment p.field").show();
         }
-      }
+      };
 
       spreePaymentRadio.change(function() {
-        hideCheckoutButtonForCCAvenue();
+        hideCouponCodeFieldForCCAvenue();
       });
 
-      hideCheckoutButtonForCCAvenue();
+      hideCouponCodeFieldForCCAvenue();
     });
   </script>
 </fieldset>

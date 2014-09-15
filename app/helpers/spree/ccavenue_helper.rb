@@ -1,13 +1,16 @@
-module Spree::Ccavenue::GatewayHelper
+require 'aes_crypter'
 
-  def css_class_based_on_order_state(order)
-    order.state == 'confirm' ? 'alpha omega grid_24' : 'alpha grid_16'
-  end
+module Spree
+  module CcavenueHelper
 
-  def encrypted_request(payment_method, transaction, order, redirect_url, encryption_key)
-    bill_address = order.bill_address
-    ship_address = order.ship_address
-    request_params = "merchant_id=#{payment_method.preferred_merchant_id}&
+    def css_class_based_on_order_state(order)
+      order.state == 'confirm' ? 'alpha omega grid_24' : 'alpha grid_16'
+    end
+
+    def encrypted_request(payment_method, transaction, order, redirect_url, encryption_key)
+      bill_address = order.bill_address
+      ship_address = order.ship_address
+      request_params = "merchant_id=#{payment_method.preferred_merchant_id}&
                       order_id=#{transaction.gateway_order_number}&
                       amount=#{order.total.to_s}&
                       currency=#{order.currency.to_s}&
@@ -34,7 +37,8 @@ module Spree::Ccavenue::GatewayHelper
                       merchant_param3=&
                       merchant_param4=&
                       merchant_param5=&
-                      promo_code="
-    AESCrypter.encrypt(request_params, encryption_key)
+                      promo_code=#{order.coupon_code}"
+      AESCrypter.encrypt(request_params, encryption_key)
+    end
   end
 end

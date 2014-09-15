@@ -2,10 +2,10 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :ccavenue_payment_method, :class => Spree::Ccavenue::PaymentMethod do
-    name 'CCAvenue'
+    name 'ccavenue'
     environment 'test'
-    preferred_account_id 'M_ccavenuecust_12345'
-    preferred_working_key '0987654321'
-    preferred_mode 'test'
+    preferred_merchant_id 'M_ccavenuecust_12345'
+    preferred_encryption_key '0987654321'
+    preferred_access_code '765865865'
   end
 end

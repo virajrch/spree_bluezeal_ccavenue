@@ -4,10 +4,6 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
   preference :encryption_key, :string
   preference :url,            :string, :default => 'https://test.ccavenue.com/transaction/transaction.do'
 
-  def payment_profiles_supported?
-    true # we want to show the confirm step.
-  end
-
   def provider_class
     Spree::Ccavenue::Transaction
   end

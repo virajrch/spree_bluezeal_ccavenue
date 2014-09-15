@@ -41,9 +41,6 @@ class Spree::Ccavenue::Transaction < ActiveRecord::Base
       transition :sent => :batch, :if => lambda {|txn| txn.auth_desc == 'B' && txn.verify_checksum }
     end
     after_transition :to => :authorized, :do => :payment_authorized
-    after_transition :to => :batch do |txn|
-      txn.payment_authorized if txn.payment_method.preferred_batch_transaction_should_complete_order
-    end
 
     event :cancel do
       transition all - [:authorized] => :canceled
@@ -61,7 +58,9 @@ class Spree::Ccavenue::Transaction < ActiveRecord::Base
   end
 
   def initialize_state!
-    raise "Order is not in 'confirm' state. Order should be in 'confirm' state before transaction can be sent to CCAvenue" unless order.confirm?
+    if order.confirmation_required? && !order.confirm?
+      raise "Order is not in 'confirm' state. Order should be in 'confirm' state before transaction can be sent to CCAvenue"
+    end
     this = self
     previous = order.ccavenue_transactions.reject{|t| t == this}
     previous.each {|p| p.cancel!}
@@ -76,9 +75,17 @@ class Spree::Ccavenue::Transaction < ActiveRecord::Base
     record = true
     while record
       random = "#{Array.new(4){rand(4)}.join}"
-      record = self.class.find(:first, :conditions => ["transaction_number = ? and order_id = ?", random, self.order.id])
+      record = Spree::Ccavenue::Transaction.where(order_id: self.order.id, transaction_number: random).first
     end
     self.transaction_number = random
+  end
+
+  def generate_checksum
+    [self.payment_method.preferred_merchant_id,
+                  gateway_order_number,
+                  self.amount.to_s,
+                  auth_desc,
+                  self.payment_method.preferred_encryption_key].join('|').to_s
   end
 
   def initialize(*args)

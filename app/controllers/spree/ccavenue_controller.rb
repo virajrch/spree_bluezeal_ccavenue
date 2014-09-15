@@ -1,22 +1,18 @@
 module Spree
-  class CcavenueGatewayController < StoreController
+  class CcavenueController < StoreController
+
+    helper 'spree/orders'
     ssl_allowed
 
     def show
-      @order = current_order
-      if !@order
-        flash[:error] = "Unknown order"
-        render :error
-        return
-      end
-
       @payment_method = Spree::PaymentMethod.find(params[:payment_method_id])
       if !@payment_method or !@payment_method.kind_of?(Spree::Ccavenue::PaymentMethod)
-        flash[:error] = "Invalid payment method for this transaction"
+        flash[:error] = 'Invalid payment method for this transaction'
         render :error
         return
       end
 
+      @order = current_order
       if @order.has_authorized_ccavenue_transaction?
         flash[:error] = "Order #{@order.number} is already authorized at CCAvenue"
         render :error
@@ -27,6 +23,7 @@ module Spree
       @order.payments.destroy_all
       @order.payments.build(:amount => @order.total, :payment_method_id => @payment_method.id)
       @transaction = @order.ccavenue_transactions.build(:amount => @order.total,
+                                                        :currency => @order.currency.to_s,
                                                         :payment_method_id => @payment_method.id)
 
       @transaction.transact
