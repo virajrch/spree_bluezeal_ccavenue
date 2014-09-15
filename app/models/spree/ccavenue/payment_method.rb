@@ -15,4 +15,5 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
   def method_type
     'ccavenue'
   end
+
 end
