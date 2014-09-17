@@ -2,7 +2,7 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
   preference :merchant_id,    :string
   preference :access_code,    :string
   preference :encryption_key, :string
-  preference :url,            :string, :default => 'https://test.ccavenue.com/transaction/transaction.do'
+  preference :url,            :string, :default => 'https://secure.ccavenue.com/transaction/transaction.do'
 
   def provider_class
     Spree::Ccavenue::Transaction
