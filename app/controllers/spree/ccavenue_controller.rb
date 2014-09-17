@@ -1,6 +1,8 @@
 module Spree
   class CcavenueController < StoreController
 
+    skip_before_filter :verify_authenticity_token, only: :callback
+
     helper 'spree/orders'
     ssl_allowed
 
