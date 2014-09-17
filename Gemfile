@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 group :test do
   gem 'ffaker'
+  gem 'rspec-rails'
 end
 
 gem 'spree', github: 'spree/spree', branch: '2-3-stable'
