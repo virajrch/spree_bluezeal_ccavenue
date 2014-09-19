@@ -4,6 +4,7 @@
 en:
   payment_rejected: "Payment was not approved at the payment gateway. Retry with correct creditcard/netbanking information"
   payment_canceled: "Payment canceled at the payment gateway"
+  order_processed_successfully: "Order processed successfully"
   ccavenue_invalid_transaction: "We received an invalid response from payment gateway. Please retry the payment"
   no_transactions: "There are no transactions"
   ccavenue_instructional_text: "You will now be redirected to our payment gateway"
