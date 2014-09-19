@@ -48,7 +48,8 @@ module Spree
     end
 
     def payment_authorized
-      order.payment.update_attributes :source => self, :payment_method_id => self.payment_method.id
+      payment = order.payments.where(:payment_method_id => self.payment_method.id).first
+      payment.update_attributes :source => self, :payment_method_id => self.payment_method.id
       order.next
       order.save
     end
