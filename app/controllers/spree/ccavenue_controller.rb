@@ -62,9 +62,9 @@ module Spree
             redirect_to order_path(@transaction.order, {:checkout_complete => true, :token => session[:access_token]})
           end
         elsif @transaction.rejected?
-          redirect_to edit_order_path(@transaction.order), :error => failure_message || status_message || I18n.t("payment_rejected")
+          redirect_to edit_order_path(@transaction.order), :error => I18n.t("payment_rejected")
         elsif @transaction.canceled?
-          redirect_to edit_order_path(@transaction.order), :notice => failure_message || status_message || I18n.t("payment_canceled")
+          redirect_to edit_order_path(@transaction.order), :notice => I18n.t("payment_canceled")
         elsif @transaction.batch?
           # Don't allow the order to be reused.
           session[:order_id] = nil
