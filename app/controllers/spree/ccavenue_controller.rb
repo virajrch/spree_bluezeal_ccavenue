@@ -39,38 +39,36 @@ module Spree
       raise "Transaction with id: #{params[:id]} not found!" unless @transaction
 
       params = decrypt_ccavenue_response_params
-      @transaction.auth_desc = params['AuthDesc']
-      @transaction.checksum = params['Checksum']
-      @transaction.card_category = params['card_category']
-      @transaction.ccavenue_order_number = params['nb_order_no']
+      logger.info "Decrypted params from CCAvenue #{params.inspect}"
+      @transaction.auth_desc = params['order_status']
+      @transaction.card_category = params['card_name']
+      @transaction.ccavenue_order_number = params['order_id']
       @transaction.ccavenue_amount = params['amount']
+      failure_message = params['failure_message']
+      status_message = params['status_message ']
 
-      session[:access_token] = @transaction.order.token if @transaction.order.respond_to?(:token)
+      session[:access_token] = @transaction.order.guest_token if @transaction.order.respond_to?(:guest_token)
       session[:order_id] = @transaction.order.id
 
       if @transaction.next
-        if @transaction.authorized? || (@transaction.batch? && @transaction.order.complete?)
+        if @transaction.authorized? # Successful
           session[:order_id] = nil
           flash.notice = I18n.t(:order_processed_successfully)
-          flash[:commerce_tracking] = "nothing special"
-          # We are setting token here so that even if the URL is copied and reused later on
-          # the completed order page still gets displayed
+          flash[:commerce_tracking] = 'nothing special'
+          # We are setting token here so that even if the URL is copied and reused later on he completed order page still gets displayed
           if session[:access_token].nil?
             redirect_to order_path(@transaction.order, {:checkout_complete => true})
           else
             redirect_to order_path(@transaction.order, {:checkout_complete => true, :token => session[:access_token]})
           end
         elsif @transaction.rejected?
-          redirect_to edit_order_path(@transaction.order), :error => I18n.t("payment_rejected")
+          redirect_to edit_order_path(@transaction.order), :error => failure_message || status_message
         elsif @transaction.canceled?
-          redirect_to edit_order_path(@transaction.order), :notice => I18n.t("payment_canceled")
+          redirect_to edit_order_path(@transaction.order), :notice => failure_message || status_message
         elsif @transaction.batch?
           # Don't allow the order to be reused.
           session[:order_id] = nil
           render 'batch'
-        elsif @transaction.error_state?
-          flash[:error] = I18n.t(:ccavenue_invalid_transaction)
-          redirect_to edit_order_path(@transaction.order)
         end
       else
         render 'error'

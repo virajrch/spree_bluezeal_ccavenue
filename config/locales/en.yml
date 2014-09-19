@@ -11,6 +11,5 @@ en:
     transaction: "Transaction"
     state: "State"
     ccavenue_order_number: "Order number at CCAvenue"
-    checksum: "Checksum"
     card_category: "Card Category"
     auth_desc: "Auth Desc (Authorization)"

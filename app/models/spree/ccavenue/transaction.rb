@@ -35,21 +35,16 @@ module Spree
       end
 
       event :next do
-        transition :sent => :canceled, :if => lambda { |txn| txn.auth_desc.nil? }
-        transition :sent => :error_state, :if => lambda { |txn| !txn.verify_checksum }
-        transition [:sent, :batch] => :authorized, :if => lambda { |txn| txn.auth_desc == 'Y' && txn.verify_checksum }
-        transition [:sent, :batch] => :rejected, :if => lambda { |txn| txn.auth_desc == 'N' && txn.verify_checksum }
-        transition :sent => :batch, :if => lambda { |txn| txn.auth_desc == 'B' && txn.verify_checksum }
+        transition :sent => :canceled, :if => lambda { |txn| txn.auth_desc == 'Aborted' }
+        transition [:sent, :batch] => :authorized, :if => lambda { |txn| txn.auth_desc == 'Success' }
+        transition [:sent, :batch] => :rejected, :if => lambda { |txn| txn.auth_desc == 'Failure' }
+        transition :sent => :batch, :if => lambda { |txn| txn.auth_desc == 'B' }
       end
       after_transition :to => :authorized, :do => :payment_authorized
 
       event :cancel do
         transition all - [:authorized] => :canceled
       end
-    end
-
-    def verify_checksum
-      generate_checksum == self.checksum
     end
 
     def payment_authorized
