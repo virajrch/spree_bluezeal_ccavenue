@@ -1,8 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Ccavenue::GatewayController do
+describe Spree::CcavenueController do
+  include RSpec::Rails::ControllerExampleGroup
+  include Devise::TestHelpers
+
   before(:all) do
-    @payment_method = Factory(:ccavenue_payment_method)
+    @payment_method = FactoryGirl.create(:ccavenue_payment_method)
   end
 
   after(:all) do
@@ -66,7 +69,11 @@ describe Spree::Ccavenue::GatewayController do
 
   context 'callback' do
     before(:each) do
-      @order = Factory(:order_with_totals)
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+      @order = FactoryGirl.create(:order_with_totals)
       @order.state = 'confirm'
       @order.payments.create!(:payment_method_id => @payment_method.id, :amount => @order.total)
       @order.save!
