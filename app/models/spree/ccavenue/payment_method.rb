@@ -4,6 +4,10 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
   preference :encryption_key, :string
   preference :url,            :string, :default => 'https://secure.ccavenue.com/transaction/transaction.do'
 
+  def auto_capture?
+    true
+  end
+
   def provider_class
     Spree::Ccavenue::Transaction
   end
