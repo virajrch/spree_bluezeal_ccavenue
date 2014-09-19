@@ -8,6 +8,13 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
     true
   end
 
+  def purchase(amount, source, options = {})
+    Class.new do
+      def success?; true; end
+      def authorization; nil; end
+    end.new
+  end
+
   def provider_class
     Spree::Ccavenue::Transaction
   end
