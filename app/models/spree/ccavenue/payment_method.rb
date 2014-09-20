@@ -8,6 +8,10 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
     'https://secure.ccavenue.com/transaction/transaction.do'
   end
 
+  def preferred_url_type
+    ''
+  end
+
   def auto_capture?
     true
   end
