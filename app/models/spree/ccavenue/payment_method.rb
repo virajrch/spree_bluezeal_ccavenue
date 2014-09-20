@@ -2,14 +2,9 @@ class Spree::Ccavenue::PaymentMethod < Spree::PaymentMethod
   preference :merchant_id,    :string
   preference :access_code,    :string
   preference :encryption_key, :string
-  #preference :url,            :string, :default => 'https://secure.ccavenue.com/transaction/transaction.do'
 
-  def preferred_url
+  def url
     'https://secure.ccavenue.com/transaction/transaction.do'
-  end
-
-  def preferred_url_type
-    ''
   end
 
   def auto_capture?

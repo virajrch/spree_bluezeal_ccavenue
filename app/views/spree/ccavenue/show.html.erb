@@ -5,7 +5,7 @@
     <div class="<%= css_class_based_on_order_state(@order) %>">
       <div class="clear"></div>
       <div class="checkout_form">
-        <%= form_tag @payment_method.preferred_url do %>
+        <%= form_tag @payment_method.url do %>
         <%
           merchant_id     = @payment_method.preferred_merchant_id
           access_code     = @payment_method.preferred_access_code
