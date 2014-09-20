@@ -1,6 +1,6 @@
 Spree::Admin::PaymentMethodsController.class_eval do
 
-  before_filter :validate_domain, :only => [:create, :update]
+  before_filter :validate_domain, :only => :update
 
   def validate_domain
     require 'net/http'
