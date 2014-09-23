@@ -6,7 +6,6 @@ module Spree
 
     private
 
-
     def confirm_ccavenue
       return unless (params[:state] == 'payment') && params[:order][:payments_attributes]
       payment_method = PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])

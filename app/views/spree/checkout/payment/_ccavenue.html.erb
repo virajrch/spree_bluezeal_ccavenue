@@ -5,24 +5,4 @@
   <br>
 
   <%= link_to(image_tag('http://www.ccavenue.com/images/460.gif'), gateway_ccavenue_path(order_id: @order.number, payment_method_id: payment_method.id), :method => :post, :id => 'ccavenue_button') %>
-
-  <script type="text/javascript">
-    $(function() {
-      var spreePaymentRadio = $("#checkout_form_payment input:radio")
-
-      var hideCouponCodeFieldForCCAvenue = function() {
-        if ($("#checkout_form_payment input:radio:checked").val() == <%= payment_method.id %>) {
-          $("#checkout_form_payment p.field").hide();
-        } else {
-          $("#checkout_form_payment p.field").show();
-        }
-      };
-
-      spreePaymentRadio.change(function() {
-        hideCouponCodeFieldForCCAvenue();
-      });
-
-      hideCouponCodeFieldForCCAvenue();
-    });
-  </script>
 </fieldset>

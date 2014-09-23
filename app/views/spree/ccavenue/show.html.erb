@@ -13,6 +13,7 @@
           order_id        = @transaction.gateway_order_number
           amount          = @order.total.to_s
           currency        = @order.currency.to_s
+          promo_code      = @order.coupon_code
           redirect_url    = gateway_ccavenue_callback_url(@transaction, :protocol => 'http')
           enc_request     = encrypted_request(@payment_method, @transaction, @order, redirect_url, encryption_key)
         %>
@@ -25,6 +26,7 @@
           <%= hidden_field_tag 'currency',                     currency %>
           <%= hidden_field_tag 'redirect_url',                 redirect_url %>
           <%= hidden_field_tag 'encRequest',                   enc_request %>
+          <%= hidden_field_tag 'promo_code',                   promo_code %>
 
           <%= render :partial => 'billing_address_fields', locals: { bill_address: @bill_address, order: @order } %>
           <%= render :partial => 'shipping_address_fields', locals: { ship_address: @ship_address, order: @order } %>
