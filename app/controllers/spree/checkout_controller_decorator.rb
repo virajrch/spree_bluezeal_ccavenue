@@ -6,6 +6,7 @@ module Spree
 
     private
 
+    # Redirect user to CCAvenue gateway when he/she selects that payment method on checkout page
     def confirm_ccavenue
       return unless (params[:state] == 'payment') && params[:order][:payments_attributes]
       payment_method = PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])

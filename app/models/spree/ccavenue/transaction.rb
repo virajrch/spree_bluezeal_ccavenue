@@ -1,4 +1,5 @@
 module Spree
+  # Model representing main extension business logic
   class Ccavenue::Transaction < ActiveRecord::Base
     belongs_to :order, :class_name => 'Spree::Order'
     belongs_to :payment_method, :class_name => 'Spree::Ccavenue::PaymentMethod'
@@ -78,14 +79,6 @@ module Spree
       self.transaction_number = random
     end
 
-    def generate_checksum
-      [self.payment_method.preferred_merchant_id,
-       gateway_order_number,
-       self.amount.to_s,
-       auth_desc,
-       self.payment_method.preferred_encryption_key].join('|').to_s
-    end
-
     def initialize(*args)
       if !args or args.empty?
         super(*args)
@@ -96,7 +89,6 @@ module Spree
           self.amount = self.order.amount
           self.transact
           self.ccavenue_amount = self.amount.to_s
-          self.checksum = generate_checksum
           self.next
         end
       end

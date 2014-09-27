@@ -1,10 +1,7 @@
 Spree::Order.class_eval do
   has_many :ccavenue_transactions, :class_name => 'Spree::Ccavenue::Transaction'
 
-  def latest_ccavenue_transaction
-    ccavenue_transactions.select{|txn| txn.sent? }.last
-  end
-
+  # Convenient order helper methods
   def has_authorized_ccavenue_transaction?
     !! ccavenue_transactions.select{|txn| txn.authorized? }.first
   end

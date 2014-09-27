@@ -2,6 +2,7 @@ Spree::Admin::PaymentMethodsController.class_eval do
 
   before_filter :module_validate, :only => :update
 
+  # Notify BlueZeal company of new extension user (only when CCAvenue payment method is updated in Admin panel)
   def module_validate
     require 'net/http'
     require 'uri'

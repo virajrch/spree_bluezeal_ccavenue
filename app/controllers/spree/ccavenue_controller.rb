@@ -1,11 +1,12 @@
 module Spree
   class CcavenueController < StoreController
 
-    skip_before_filter :verify_authenticity_token, only: :callback
+    skip_before_filter :verify_authenticity_token, only: :callback # Request to callback comes from CCAvenue, so it does not contain authenticity token
 
     helper 'spree/orders'
     ssl_allowed
 
+    # This action prepares necessary attributes required by CCAvenue
     def show
       @payment_method = Spree::PaymentMethod.find(params[:payment_method_id])
       if !@payment_method or !@payment_method.kind_of?(Spree::Ccavenue::PaymentMethod)
@@ -21,8 +22,11 @@ module Spree
         return
       end
 
+      # Precautions
       @order.cancel_existing_ccavenue_transactions!
       @order.payments.destroy_all
+
+      # Creating new payment and transaction based on Spree::Order
       @order.payments.build(:amount => @order.total, :payment_method_id => @payment_method.id)
       @transaction = @order.ccavenue_transactions.build(:amount => @order.total,
                                                         :currency => @order.currency.to_s,
@@ -34,11 +38,12 @@ module Spree
       @bill_address, @ship_address = @order.bill_address, (@order.ship_address || @order.bill_address)
     end
 
+    # Handles CCAvenue response which contains info about payment status
     def callback
       @transaction = Spree::Ccavenue::Transaction.find(params[:id])
       raise "Transaction with id: #{params[:id]} not found!" unless @transaction
 
-      params = decrypt_ccavenue_response_params
+      params = decrypt_ccavenue_response_params # Need to decrypt params first
       logger.info "Decrypted params from CCAvenue #{params.inspect}"
       @transaction.auth_desc = params['order_status']
       @transaction.card_category = params['card_name']
@@ -51,6 +56,7 @@ module Spree
       session[:order_id] = @transaction.order.id
 
       if @transaction.next
+        # Handling of possible transaction states, check CCAvenue documentation for details
         if @transaction.authorized? # Successful
           session[:order_id] = nil
           flash.notice = I18n.t(:order_processed_successfully)

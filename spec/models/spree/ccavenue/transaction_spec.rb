@@ -49,7 +49,6 @@ describe Spree::Ccavenue::Transaction do
     it "should complete order when state is authorized" do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
       transaction.auth_desc = 'Y'
-      transaction.checksum = transaction.generate_checksum
       transaction.next
       transaction.state.should == 'authorized'
       transaction.order.state.should == 'complete'
@@ -58,7 +57,6 @@ describe Spree::Ccavenue::Transaction do
     it "should move to rejected when proceeding to next state for a rejected transaction" do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
       transaction.auth_desc = 'N'
-      transaction.checksum = transaction.generate_checksum
       transaction.next
       transaction.state.should == 'rejected'
     end
@@ -67,7 +65,6 @@ describe Spree::Ccavenue::Transaction do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
       current_state = transaction.order.state
       transaction.auth_desc = 'N'
-      transaction.checksum = transaction.generate_checksum
       transaction.next
       transaction.order.state.should == current_state
     end

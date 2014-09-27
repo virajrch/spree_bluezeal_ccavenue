@@ -18,9 +18,6 @@ FactoryGirl.define do
     transaction_number '1234'
     state 'sent'
     ccavenue_amount {|t| t.order.amount.to_s}
-    after(:create) do |txn, proxy|
-      txn.checksum = txn.generate_checksum
-    end
   end
 
   factory :ccavenue_rejected_transaction, :parent => :ccavenue_sent_transaction do

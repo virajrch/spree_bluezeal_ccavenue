@@ -7,6 +7,7 @@ module Spree
       order.state == 'confirm' ? 'alpha omega grid_24' : 'alpha grid_16'
     end
 
+    # CCAvenue requires the request with encrypted params
     def encrypted_request(payment_method, transaction, order, redirect_url, encryption_key)
       params = request_params(payment_method, transaction, order, redirect_url)
       AESCrypter.encrypt(params, encryption_key)
