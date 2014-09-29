@@ -21,15 +21,8 @@
           <%= hidden_field_tag 'command',                      'initiateTransaction' %>
           <%= hidden_field_tag 'merchant_id',                  merchant_id %>
           <%= hidden_field_tag 'access_code',                  access_code %>
-          <%= hidden_field_tag 'order_id',                     order_id %>
-          <%= hidden_field_tag 'amount',                       amount %>
-          <%= hidden_field_tag 'currency',                     currency %>
-          <%= hidden_field_tag 'redirect_url',                 redirect_url %>
           <%= hidden_field_tag 'encRequest',                   enc_request %>
-          <%= hidden_field_tag 'promo_code',                   promo_code %>
 
-          <%= render :partial => 'billing_address_fields', locals: { bill_address: @bill_address, order: @order } %>
-          <%= render :partial => 'shipping_address_fields', locals: { ship_address: @ship_address, order: @order } %>
           <%= render :partial => 'spree/checkout/confirm' %>
           <p style="margin: 10px 0;"><%= t(:ccavenue_instructional_text) %></p><br/>
         <% end %>
