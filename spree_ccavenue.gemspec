@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.description = 'CCAvenue is a payment gateway in India. This gem provides suppport for CCAvenue in Spree Commerce'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.author            = 'BlueZeal'
-  s.email             = 'service@ccavenue.com'
-  s.homepage          = 'http://ccavenue.com/'
+  s.author            = 'BlueZeal SoftNet'
+  s.email             = 'support@bluezeal.in'
+  s.homepage          = 'https//:www.bluezeal.in'
 
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")

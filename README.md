@@ -36,4 +36,4 @@ Simply add this require statement to your spec_helper:
 require 'spree_ccavenue/factories'
 ```
 
-Copyright (c) 2014 CCAvenue, released under the New BSD License
+Copyright (c) 2014 BlueZeal SoftNet, module version: 1.0, released under the New BSD License
