@@ -14,24 +14,20 @@ FactoryGirl.define do
     end
   end
 
-  factory :ccavenue_sent_transaction, :parent => :ccavenue_transaction do
+  factory :ccavenue_sent_transaction, parent: :ccavenue_transaction do
     transaction_number '1234'
     state 'sent'
     ccavenue_amount {|t| t.order.amount.to_s}
   end
 
-  factory :ccavenue_rejected_transaction, :parent => :ccavenue_sent_transaction do
+  factory :ccavenue_rejected_transaction, parent: :ccavenue_sent_transaction do
     state 'rejected'
-    auth_desc 'N'
+    auth_desc 'Failure'
   end
 
-  factory :ccavenue_authorized_transaction, :parent => :ccavenue_sent_transaction do
+  factory :ccavenue_authorized_transaction, parent: :ccavenue_sent_transaction do
     state 'authorized'
-    auth_desc 'Y'
+    auth_desc 'Success'
   end
 
-  factory :ccavenue_batch_transaction, :parent => :ccavenue_sent_transaction do
-    state 'batch'
-    auth_desc 'B'
-  end
 end
