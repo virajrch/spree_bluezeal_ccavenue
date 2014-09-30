@@ -10,10 +10,6 @@
           merchant_id     = @payment_method.preferred_merchant_id
           access_code     = @payment_method.preferred_access_code
           encryption_key  = @payment_method.preferred_encryption_key
-          order_id        = @transaction.gateway_order_number
-          amount          = @order.total.to_s
-          currency        = @order.currency.to_s
-          promo_code      = @order.coupon_code
           redirect_url    = gateway_ccavenue_callback_url(@transaction, :protocol => 'http')
           enc_request     = encrypted_request(@payment_method, @transaction, @order, redirect_url, encryption_key)
         %>
