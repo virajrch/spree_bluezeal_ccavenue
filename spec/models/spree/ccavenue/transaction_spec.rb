@@ -82,10 +82,6 @@ describe Spree::Ccavenue::Transaction do
       transaction.cancel
       transaction.state.should == 'canceled'
 
-      transaction = FactoryGirl.create(:ccavenue_batch_transaction)
-      transaction.cancel
-      transaction.state.should == 'canceled'
-
       transaction = FactoryGirl.create(:ccavenue_authorized_transaction)
       transaction.cancel
       transaction.state.should == 'authorized'
