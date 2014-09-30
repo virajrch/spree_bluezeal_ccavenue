@@ -40,7 +40,6 @@ module Spree
         transition [:sent, :batch] => :authorized, :if => lambda { |txn| txn.auth_desc == 'Success' }
         transition [:sent, :batch] => :rejected, :if => lambda { |txn| txn.auth_desc == 'Failure' }
         transition [:sent, :batch] => :initiated, :if => lambda { |txn| txn.auth_desc == 'initiated' }
-        transition :sent => :batch, :if => lambda { |txn| txn.auth_desc == 'B' }
       end
       after_transition :to => :authorized, :do => :payment_authorized
 
