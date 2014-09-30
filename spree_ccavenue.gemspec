@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.author            = 'BlueZeal SoftNet'
   s.email             = 'support@bluezeal.in'
-  s.homepage          = 'https//:www.bluezeal.in'
+  s.homepage          = 'https://www.bluezeal.in'
 
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
