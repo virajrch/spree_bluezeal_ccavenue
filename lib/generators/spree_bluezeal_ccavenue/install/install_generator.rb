@@ -1,4 +1,4 @@
-module SpreeCcavenue
+module SpreeBluezealCcavenue
   module Generators
     class InstallGenerator < Rails::Generators::Base
 
