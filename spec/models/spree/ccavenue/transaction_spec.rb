@@ -38,17 +38,9 @@ describe Spree::Ccavenue::Transaction do
       transaction.gateway_order_number.should_not be_nil
     end
 
-    it "should move to 'invalid' state when transaction checksum do not match" do
-      transaction = FactoryGirl.create(:ccavenue_sent_transaction)
-      transaction.auth_desc = 'Y'
-      transaction.checksum = "123456789"
-      transaction.next
-      transaction.state.should == 'error_state'
-    end
-
     it "should complete order when state is authorized" do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
-      transaction.auth_desc = 'Y'
+      transaction.auth_desc = 'Success'
       transaction.next
       transaction.state.should == 'authorized'
       transaction.order.state.should == 'complete'
@@ -56,7 +48,7 @@ describe Spree::Ccavenue::Transaction do
 
     it "should move to rejected when proceeding to next state for a rejected transaction" do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
-      transaction.auth_desc = 'N'
+      transaction.auth_desc = 'Failure'
       transaction.next
       transaction.state.should == 'rejected'
     end
@@ -64,7 +56,7 @@ describe Spree::Ccavenue::Transaction do
     it "should keep the order at same state when transaction state is rejected" do
       transaction = FactoryGirl.create(:ccavenue_sent_transaction)
       current_state = transaction.order.state
-      transaction.auth_desc = 'N'
+      transaction.auth_desc = 'Failure'
       transaction.next
       transaction.order.state.should == current_state
     end

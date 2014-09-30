@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_bluezeal_ccavenue'
-  s.version     = '2.3.3'
+  s.version     = '2.3.4'
   s.summary     = 'CCAvenue payment gateway support for Spree'
   s.description = 'CCAvenue is a payment gateway in India. This gem provides suppport for CCAvenue in Spree Commerce'
   s.required_ruby_version = '>= 1.9.3'
