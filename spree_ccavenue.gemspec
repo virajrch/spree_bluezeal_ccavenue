@@ -1,7 +1,7 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_ccavenue'
+  s.name        = 'spree_bluezeal_ccavenue'
   s.version     = '2.3.3'
   s.summary     = 'CCAvenue payment gateway support for Spree'
   s.description = 'CCAvenue is a payment gateway in India. This gem provides suppport for CCAvenue in Spree Commerce'
