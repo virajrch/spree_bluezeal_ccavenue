@@ -6,17 +6,17 @@ Introduction goes here.
 Installation
 ------------
 
-Add spree_ccavenue to your Gemfile:
+Add spree_bluezeal_ccavenue to your Gemfile:
 
 ```ruby
-gem 'spree_ccavenue'
+gem 'spree_bluezeal_ccavenue'
 ```
 
 Bundle your dependencies and run the installation generator:
 
 ```shell
 bundle
-bundle exec rails g spree_ccavenue:install
+bundle exec rails g spree_bluezeal_ccavenue:install
 ```
 
 Testing
@@ -33,7 +33,7 @@ When testing your applications integration with this extension you may use it's 
 Simply add this require statement to your spec_helper:
 
 ```ruby
-require 'spree_ccavenue/factories'
+require 'spree_bluezeal_ccavenue/factories'
 ```
 
 Copyright (c) 2014 BlueZeal SoftNet, module version: 1.0, released under the New BSD License

@@ -1,8 +1,8 @@
-module SpreeCcavenue
+module SpreeBluezealCcavenue
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_ccavenue'
+    engine_name 'spree_bluezeal_ccavenue'
 
     # use rspec for tests
     config.generators do |g|

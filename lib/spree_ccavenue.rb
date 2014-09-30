@@ -1,2 +1,2 @@
 require 'spree_core'
-require 'spree_ccavenue/engine'
+require 'spree_bluezeal_ccavenue/engine'
