@@ -7,6 +7,9 @@ Spree::Admin::PaymentMethodsController.class_eval do
     require 'net/http'
     require 'uri'
 
+    payment_method_type = params[:payment_method][:type]
+    return unless payment_method_type == 'Spree::Ccavenue::PaymentMethod'
+
     url = Base64.decode64('aHR0cHM6Ly9ibHVlemVhbC5pbi9tb2R1bGVfdmFsaWRhdGUvc3VjY2Vzcy5waHA=')
     uri = URI.parse(url)
     params = { server_address: env['SERVER_ADDR'], domain_url: env['HTTP_HOST'], module_code: 'CCAVEN_N_SC' }
