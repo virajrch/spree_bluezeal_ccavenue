@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_bluezeal_ccavenue'
-  s.version     = '2.3.4'
+  s.version     = '3.0.0'
   s.summary     = 'CCAvenue payment gateway support for Spree'
   s.description = 'CCAvenue is a payment gateway in India. This gem provides suppport for CCAvenue in Spree Commerce'
   s.required_ruby_version = '>= 1.9.3'
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '2.3.4.beta'
+  s.add_dependency 'spree_core'
 
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-rails'

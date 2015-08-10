@@ -4,7 +4,7 @@ module Spree
   module CcavenueHelper
 
     def css_class_based_on_order_state(order)
-      order.state == 'confirm' ? 'alpha omega grid_24' : 'alpha grid_16'
+      order.state == 'confirm' ? 'col-md-12' : 'col-md-12'
     end
 
     # CCAvenue requires the request with encrypted params

@@ -4,7 +4,6 @@ module Spree
     skip_before_filter :verify_authenticity_token, only: :callback # Request to callback comes from CCAvenue, so it does not contain authenticity token
 
     helper 'spree/orders'
-    ssl_allowed
 
     # This action prepares necessary attributes required by CCAvenue
     def show
@@ -63,16 +62,16 @@ module Spree
           flash[:commerce_tracking] = 'nothing special'
           # We are setting token here so that even if the URL is copied and reused later on he completed order page still gets displayed
           if session[:access_token].nil?
-            redirect_to order_path(@transaction.order, {:checkout_complete => true})
+            redirect_to order_path(@transaction.order, {:order_completed => true})
           else
-            redirect_to order_path(@transaction.order, {:checkout_complete => true, :token => session[:access_token]})
+            redirect_to order_path(@transaction.order, {:order_completed => true, :token => session[:access_token]})
           end
         elsif @transaction.rejected?
-          redirect_to edit_order_path(@transaction.order), :error => I18n.t("payment_rejected")
+          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :error => I18n.t("payment_rejected")
         elsif @transaction.canceled?
-          redirect_to edit_order_path(@transaction.order), :notice => I18n.t("payment_canceled")
+          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :notice => I18n.t("payment_canceled")
         elsif @transaction.initiated?
-          redirect_to edit_order_path(@transaction.order), :notice => I18n.t("payment_initiated")
+          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :notice => I18n.t("payment_initiated")
         elsif @transaction.batch?
           # Don't allow the order to be reused.
           session[:order_id] = nil
