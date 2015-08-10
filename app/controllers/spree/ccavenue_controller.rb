@@ -67,11 +67,11 @@ module Spree
             redirect_to order_path(@transaction.order, {:order_completed => true, :token => session[:access_token]})
           end
         elsif @transaction.rejected?
-          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :error => I18n.t("payment_rejected")
+          redirect_to checkout_state_path('payment'), :error => I18n.t("payment_rejected")
         elsif @transaction.canceled?
-          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :notice => I18n.t("payment_canceled")
+          redirect_to checkout_state_path('payment'), :notice => I18n.t("payment_canceled")
         elsif @transaction.initiated?
-          redirect_to gateway_ccavenue_path(@transaction.order, payment_method_id: @transaction.payment_method), :notice => I18n.t("payment_initiated")
+          redirect_to checkout_state_path('payment'), :notice => I18n.t("payment_initiated")
         elsif @transaction.batch?
           # Don't allow the order to be reused.
           session[:order_id] = nil

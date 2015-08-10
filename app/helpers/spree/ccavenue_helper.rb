@@ -3,10 +3,6 @@ require 'aes_crypter'
 module Spree
   module CcavenueHelper
 
-    def css_class_based_on_order_state(order)
-      order.state == 'confirm' ? 'col-md-12' : 'col-md-12'
-    end
-
     # CCAvenue requires the request with encrypted params
     def encrypted_request(payment_method, transaction, order, redirect_url, encryption_key)
       params = request_params(payment_method, transaction, order, redirect_url)
