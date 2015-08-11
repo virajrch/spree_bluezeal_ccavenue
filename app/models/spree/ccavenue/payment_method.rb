@@ -14,6 +14,27 @@ module Spree
       true
     end
 
+    # def actions
+    #   %w{capture void}
+    # end
+
+    # # Indicates whether its possible to capture the payment
+    # def can_capture?(payment)
+    #   ['checkout', 'pending'].include?(payment.state)
+    # end
+
+    # # Indicates whether its possible to void the payment.
+    # def can_void?(payment)
+    #   payment.state != 'void'
+    # end
+
+    # def capture(*args)
+    #   simulated_successful_billing_response
+    # end
+
+    # def void(*args)
+    #   simulated_successful_billing_response
+    # end
 
     # Following methods are required to comply with Spree
     def purchase(amount, source, options = {})
@@ -39,6 +60,12 @@ module Spree
     def method_type
       'ccavenue'
     end
+
+    # private
+
+    # def simulated_successful_billing_response
+    #   ActiveMerchant::Billing::Response.new(true, "", {}, {})
+    # end
 
   end
 

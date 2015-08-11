@@ -15,6 +15,7 @@ module Spree
       end
 
       @order = current_order
+
       if @order.has_authorized_ccavenue_transaction?
         flash[:error] = "Order #{@order.number} is already authorized at CCAvenue"
         render :error
@@ -26,8 +27,8 @@ module Spree
       @order.payments.destroy_all
 
       # Creating new payment and transaction based on Spree::Order
-      @order.payments.build(:amount => @order.total, :payment_method_id => @payment_method.id)
-      @transaction = @order.ccavenue_transactions.build(:amount => @order.total,
+      @order.payments.build(:amount => @order.upfront_payment, :payment_method_id => @payment_method.id)
+      @transaction = @order.ccavenue_transactions.build(:amount => @order.upfront_payment,
                                                         :currency => @order.currency.to_s,
                                                         :payment_method_id => @payment_method.id)
 
@@ -35,6 +36,28 @@ module Spree
       @order.save!
       logger.info("Sending order #{@order.number} to CCAvenue via transaction id #{@transaction.id}")
       @bill_address, @ship_address = @order.bill_address, (@order.ship_address || @order.bill_address)
+      render :layout => false
+    end
+
+    def backend
+      @payment_method = Spree::PaymentMethod.find(params[:payment_method_id])
+      if !@payment_method or !@payment_method.kind_of?(Spree::Ccavenue::PaymentMethod)
+        flash[:error] = 'Invalid payment method for this transaction'
+        render :error
+        return
+      end
+
+      @order = Order.friendly.find(params[:order_id])
+      payment = @order.payments.friendly.find(params[:payment_id])
+      @transaction = @order.ccavenue_transactions.build(:amount => payment.amount,
+                                                :currency => @order.currency.to_s,
+                                                :payment_method_id => @payment_method.id)
+
+      @transaction.transact
+      @order.save!
+      logger.info("Sending order #{@order.number} to CCAvenue via transaction id #{@transaction.id}")
+      @bill_address, @ship_address = @order.bill_address, (@order.ship_address || @order.bill_address)
+      render 'show', :layout => false
     end
 
     # Handles CCAvenue response which contains info about payment status

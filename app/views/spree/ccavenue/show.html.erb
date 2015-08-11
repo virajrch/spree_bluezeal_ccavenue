@@ -1,4 +1,4 @@
-<%= form_tag @payment_method.url do %>
+<%= form_tag @payment_method.url, style: 'display: none;' do %>
   <%
     merchant_id     = @payment_method.preferred_merchant_id
     access_code     = @payment_method.preferred_access_code
@@ -13,3 +13,6 @@
     <%= hidden_field_tag 'encRequest',                   enc_request %>
     <%= submit_tag Spree.t(:place_order), :class => 'btn btn-lg btn-success' %>
 <% end %>
+<script>
+    document.getElementsByTagName('form')[0].submit();
+</script>
