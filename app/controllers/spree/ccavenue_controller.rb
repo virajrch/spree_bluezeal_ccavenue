@@ -1,7 +1,7 @@
 module Spree
   class CcavenueController < StoreController
 
-    skip_before_filter :verify_authenticity_token, only: :callback # Request to callback comes from CCAvenue, so it does not contain authenticity token
+    skip_before_action :verify_authenticity_token, only: :callback # Request to callback comes from CCAvenue, so it does not contain authenticity token
 
     helper 'spree/orders'
 
